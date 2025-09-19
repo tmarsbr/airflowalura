@@ -108,11 +108,23 @@ airflow users create \
 
 Para usar o DAG `dados_climaticos`, você precisa:
 
-1. Obter uma API key gratuita em [Visual Crossing Weather](https://www.visualcrossing.com/weather-api)
-2. Substituir a chave no arquivo `dags/dados_crimaticos.py`:
-```python
-key = "SUA_API_KEY_AQUI"
+1. **Obter uma API key gratuita** em [Visual Crossing Weather](https://www.visualcrossing.com/weather-api)
+
+2. **Configurar a variável de ambiente**:
+```bash
+# Opção 1: Configurar no terminal (temporário)
+export VISUAL_CROSSING_API_KEY="sua_chave_aqui"
+
+# Opção 2: Criar arquivo .env (recomendado)
+cp .env.example .env
+# Edite o arquivo .env e adicione sua chave
 ```
+
+3. **No Airflow UI** (alternativa):
+   - Acesse Admin > Variables
+   - Adicione: Key: `VISUAL_CROSSING_API_KEY`, Value: `sua_chave_aqui`
+
+⚠️ **Importante**: Nunca commite chaves da API no código fonte!
 
 ### Estrutura de Diretórios
 

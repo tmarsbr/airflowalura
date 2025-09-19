@@ -22,8 +22,11 @@ with DAG(
 
     def extrai_dados(data_interval_end):
         city = 'Boston'
-        key = "H8MDRWEX6MSRPC2XEAQJ2YUD6"
-
+        # Obtém a chave da API de variável de ambiente por segurança
+        key = os.getenv('VISUAL_CROSSING_API_KEY', 'SUA_CHAVE_AQUI')
+        
+        if key == 'SUA_CHAVE_AQUI':
+            raise ValueError("API key não encontrada! Configure a variável de ambiente VISUAL_CROSSING_API_KEY")
 
         URL = join("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/",
                 f"{city}/{data_interval_end}/{ds_add(data_interval_end, 7)}?unitGroup=metric&include=days&key={key}&contentType=csv")

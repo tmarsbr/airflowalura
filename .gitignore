@@ -114,6 +114,11 @@ celerybeat.pid
 .env.test.local
 .env.production.local
 
+# API Keys and sensitive files
+*.key
+config.ini
+secrets.yaml
+
 # Data files (CSV gerados pelos DAGs)
 semana=*/
 pasta=*/
