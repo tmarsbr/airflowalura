@@ -1,35 +1,81 @@
-# Projeto Airflow - Dados Climáticos
+# 🌤️ Pipeline de Dados Climáticos - Airflow
 
-Este projeto contém DAGs (Directed Acyclic Graphs) do Apache Airflow para extração e processamento de dados climáticos.
+## 💼 Contexto de Negócio
 
-## 📋 Descrição
+**Desafio**: Uma empresa de turismo em Boston precisava de um sistema automatizado para extrair e processar dados meteorológicos semanais, permitindo planejar os melhores roteiros turísticos baseados nas condições climáticas previstas.
 
-O projeto inclui dois DAGs principais:
+**Problema**: A empresa não possuía uma solução escalável para:
+- Coletar dados meteorológicos de forma consistente e automatizada
+- Processar e organizar informações climáticas para tomada de decisão
+- Adaptar ofertas de passeios às condições meteorológicas previstas
 
-### 1. `dados_climaticos`
-- **Função**: Extrai dados climáticos da API Visual Crossing Weather
-- **Agendamento**: Executa toda segunda-feira às 00:00 UTC
-- **Tarefas**:
-  - Cria pasta semanal para armazenamento dos dados
-  - Extrai dados climáticos de Boston para a semana
-  - Salva os dados em três arquivos CSV:
-    - `dados_brutos.csv`: Dados completos da API
-    - `temperaturas.csv`: Temperaturas máxima, mínima e média
-    - `condicoes.csv`: Descrição e ícones das condições climáticas
+**Solução Desenvolvida**: Pipeline de dados robusto usando Apache Airflow que:
+- ✅ Extrai automaticamente dados da API Visual Crossing Weather
+- ✅ Processa e estrutura informações meteorológicas
+- ✅ Armazena dados organizados para análise de negócio
+- ✅ Executa semanalmente de forma automatizada
 
-### 2. `meu_primeiro_dag`
-- **Função**: DAG de exemplo para aprendizado
-- **Agendamento**: Execução diária
-- **Tarefas**: Sequência de tarefas vazias e criação de pasta
+**Impacto**: Capacita a empresa a tomar decisões data-driven sobre roteiros turísticos, melhorando a experiência do cliente e otimizando operações.
 
-## 🚀 Requisitos
+---
 
-- Python 3.7+
-- Apache Airflow 2.0+
-- pandas
-- pendulum
+## 🏗️ Arquitetura Técnica
 
-## 📦 Instalação
+Este projeto implementa DAGs (Directed Acyclic Graphs) do Apache Airflow para extração e processamento automatizado de dados climáticos.
+
+### DAGs Implementados:
+
+### 🎯 1. `dados_climaticos` - Pipeline Principal
+- **Objetivo**: Extração automatizada de dados meteorológicos para análise de negócio
+- **Fonte**: API Visual Crossing Weather (Boston, MA)
+- **Frequência**: Semanal (segundas-feiras às 00:00 UTC)
+- **Processamento**:
+  - 📁 Criação de estrutura de diretórios organizados por semana
+  - 🌡️ Extração de dados completos da API meteorológica
+  - 📊 Separação em datasets especializados:
+    - `dados_brutos.csv`: Dataset completo da API
+    - `temperaturas.csv`: Métricas de temperatura (máx, mín, média)
+    - `condicoes.csv`: Condições meteorológicas e iconografia
+
+### 🧪 2. `meu_primeiro_dag` - Exemplo Educacional
+- **Objetivo**: Demonstração de conceitos fundamentais do Airflow
+- **Funcionalidades**: Tarefas sequenciais e paralelas, criação de estruturas de dados
+
+## �️ Stack Tecnológica
+
+- **Orquestração**: Apache Airflow 2.0+
+- **Linguagem**: Python 3.7+
+- **Processamento**: pandas para manipulação de dados
+- **Scheduling**: pendulum para gerenciamento de tempo
+- **API Integration**: Visual Crossing Weather API
+- **Versionamento**: Git + GitHub
+
+## 🏆 Características Técnicas
+
+- **Arquitetura orientada a eventos** com DAGs modulares
+- **Processamento automatizado** com agendamento robusto
+- **Tratamento de dados estruturados** em múltiplos formatos
+- **Integração com APIs externas** com tratamento de erros
+- **Logging e monitoramento** nativo do Airflow
+- **Estrutura escalável** para expansão futura
+
+## � Casos de Uso e Extensões
+
+### Aplicações Atuais
+- 🎯 **Planejamento Turístico**: Otimização de roteiros baseada em condições meteorológicas
+- 📊 **Análise Temporal**: Identificação de padrões climáticos semanais
+- 🔔 **Alertas Automáticos**: Base para sistemas de notificação meteorológica
+
+### Possíveis Expansões
+- 🌍 **Multi-cidade**: Extensão para múltiplas localidades
+- 🤖 **ML Integration**: Modelos preditivos baseados em histórico
+- 📱 **API própria**: Desenvolvimento de endpoints para consumo
+- 📧 **Notificações**: Sistema de alertas automáticos
+- 🔗 **Integração CRM**: Conexão com sistemas de gestão de clientes
+
+---
+
+## 🚀 Quick Start
 
 1. Clone o repositório:
 ```bash
@@ -96,21 +142,34 @@ airflow scheduler
 
 4. Ative os DAGs desejados na interface web
 
-## 📊 Dados Extraídos
+## 📊 Dados e Métricas
 
-### Dados Climáticos de Boston
-- **Fonte**: Visual Crossing Weather API
-- **Cidade**: Boston, MA, USA
-- **Frequência**: Semanal (toda segunda-feira)
-- **Período**: 7 dias a partir da data de execução
+### Fonte de Dados
+- **API**: Visual Crossing Weather
+- **Localização**: Boston, Massachusetts, USA
+- **Cobertura**: Previsão de 7 dias
+- **Atualização**: Semanal automatizada
+- **Volume**: ~1000 registros/mês
 
-### Campos dos Dados
-- **datetime**: Data e hora
-- **tempmax**: Temperatura máxima (°C)
-- **tempmin**: Temperatura mínima (°C)
-- **temp**: Temperatura média (°C)
-- **description**: Descrição das condições climáticas
-- **icon**: Ícone representativo do clima
+### Datasets Gerados
+| Arquivo | Descrição | Campos Principais |
+|---------|-----------|-------------------|
+| `dados_brutos.csv` | Dataset completo da API | Todos os campos meteorológicos |
+| `temperaturas.csv` | Métricas térmicas | datetime, tempmax, tempmin, temp |
+| `condicoes.csv` | Condições meteorológicas | datetime, description, icon |
+
+### Estrutura de Saída
+```
+airflowalura/
+├── semana=2025-09-15/
+│   ├── dados_brutos.csv      # Dataset completo
+│   ├── temperaturas.csv      # Análise térmica
+│   └── condicoes.csv         # Condições climáticas
+└── semana=2025-09-22/
+    ├── dados_brutos.csv
+    ├── temperaturas.csv
+    └── condicoes.csv
+```
 
 ## 📁 Estrutura do Projeto
 
@@ -149,14 +208,16 @@ schedule_interval="@weekly"    # Para execução semanal
 4. Push para a branch (`git push origin feature/AmazingFeature`)
 5. Abra um Pull Request
 
-## 📝 Licença
+---
 
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+## 📝 Licença & Contato
 
-## 📞 Contato
+**Licença**: MIT License - Projeto educacional e demonstrativo
 
-Se você tiver dúvidas ou sugestões, sinta-se à vontade para abrir uma issue no GitHub.
+**Desenvolvedor**: [@tmarsbr](https://github.com/tmarsbr)
+
+**Contato**: Para dúvidas ou discussões técnicas, abra uma [issue](https://github.com/tmarsbr/airflowalura/issues) no repositório.
 
 ---
 
-**Nota**: Este projeto foi criado para fins educacionais e demonstração do Apache Airflow.
+*Este projeto demonstra competências em engenharia de dados, orquestração de workflows, integração de APIs e automação de processos usando ferramentas modernas da stack de dados.*
